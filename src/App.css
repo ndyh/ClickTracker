@@ -1,0 +1,56 @@
+.App,
+.click-container {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-container {
+  display: flex;
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  width: 140px;
+  margin: 2px;
+}
+
+button {
+  height: 25px;
+  width: 68px;
+  margin: 2px;
+  color: #282c34;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5%;
+  cursor: pointer;
+  transition: background-color ease-in-out 0.175s;
+}
+
+button:hover {
+  background-color: #cecece;
+  transition: background-color ease-in-out 0.175s;
+}
+
+button:active {
+  background-color: #afafaf;
+  transition: background-color ease-in-out 0.175s;
+}
+
+button:disabled {
+  background-color: #4ca7c0;
+}
+
+.App > .click-container {
+  position: static;
+}
+
+.click-container > .point {
+  display: inline-block;
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  padding: 10 10;
+  border-radius: 50%;
+  background-color: #61dafb;
+  box-shadow: 1px 1px 5px rgba(10, 10, 10, 0.842);
+}
