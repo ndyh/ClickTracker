@@ -25,22 +25,36 @@ function App() {
     }
   }
 
+  function handleClear() {
+    if (coords.length !== 0 && poppedCoords.length !== 0) {
+      setCoords([]);
+      setPoppedCoords([]);
+    }
+  }
+
   return (
     <div className="App">
       <div className="btn-container">
         <button
           className="undo"
-          disabled={coords.length === 0}
           onClick={handleUndo}
+          disabled={coords.length === 0}
         >
           Undo {coords != 0 && <span>({coords.length})</span>}
         </button>
         <button
           className="redo"
-          disabled={poppedCoords.length === 0}
           onClick={handleRedo}
+          disabled={poppedCoords.length === 0}
         >
           Redo {poppedCoords != 0 && <span>({poppedCoords.length})</span>}
+        </button>
+        <button
+          className="clear"
+          onClick={handleClear}
+          disabled={coords.length === 0 && poppedCoords.length === 0}
+        >
+          Clear
         </button>
       </div>
       <div className="click-container" onClick={handleClickEvent}>
