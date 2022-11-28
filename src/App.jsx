@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import CoordInfo from "./components/CoordInfo";
 import "./App.css";
 
 function App() {
+  const [coordInfo, setCoordInfo] = useState({});
   const [coords, setCoords] = useState([]);
   const [poppedCoords, setPoppedCoords] = useState([]);
 
@@ -29,6 +31,7 @@ function App() {
     if (coords.length !== 0 || poppedCoords.length !== 0) {
       setCoords([]);
       setPoppedCoords([]);
+      setCoordInfo({});
     }
   }
 
@@ -58,14 +61,20 @@ function App() {
         </button>
       </div>
       <div className="click-container" onClick={handleClickEvent}>
-        {coords.map((item, index) => (
+        {coordInfo.show && (
+          <CoordInfo index={coordInfo.id} point={coordInfo.point} />
+        )}
+        {coords.map((c, index) => (
           <div
             className="point"
             key={index}
-            style={{ top: item.y - 4, left: item.x - 3 }}
+            onMouseOver={() =>
+              setCoordInfo({ show: true, id: index, point: c })
+            }
+            onMouseOut={() => setCoordInfo({ show: false })}
+            style={{ top: c.y - 4, left: c.x - 3 }}
           ></div>
         ))}
-        {}
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.coord-info {
+  z-index: 100;
+  display: inline-block;
+  position: absolute;
+  width: 5vh;
+  padding: 3px;
+  color: #61dafb;
+  border: 1px solid #61dafb;
+  background-color: rgba(30, 30, 30, 0.85);
+  box-shadow: 1px 1px 5px rgba(10, 10, 10, 0.642);
+  user-select: none;
+  -moz-user-select: none;
+}
+
+.coord-info > p {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -moz-user-select: none;
+}
+
+.coord-info > p > span {
+  font-weight: bold;
+  user-select: none;
+  -moz-user-select: none;
+}
+
+.prevent-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
