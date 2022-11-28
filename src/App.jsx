@@ -7,10 +7,12 @@ function App() {
   const [coords, setCoords] = useState([]);
   const [poppedCoords, setPoppedCoords] = useState([]);
 
+  // Push mouseEvent X, Y to coords state
   function handleClickEvent({ clientX, clientY }) {
     setCoords([...coords, { x: clientX, y: clientY }]);
   }
 
+  // Pop latest coords element and push element to poppedCoords state
   function handleUndo() {
     if (coords.legnth !== 0) {
       let c = [...coords];
@@ -19,6 +21,7 @@ function App() {
     }
   }
 
+  // Pop latest poppedCoords element and push element back to coords state
   function handleRedo() {
     if (poppedCoords.length !== 0) {
       let pc = [...poppedCoords];
@@ -27,6 +30,7 @@ function App() {
     }
   }
 
+  // Reset states
   function handleClear() {
     if (coords.length !== 0 || poppedCoords.length !== 0) {
       setCoords([]);
@@ -61,15 +65,16 @@ function App() {
         </button>
       </div>
       <div className="click-container" onClick={handleClickEvent}>
-        {coordInfo.show && (
-          <CoordInfo index={coordInfo.id} point={coordInfo.point} />
-        )}
-        {coords.map((c, index) => (
+        {coordInfo.show && <CoordInfo point={coordInfo.point} />}
+        {coords.map((c, i) => (
           <div
             className="point"
-            key={index}
+            key={i}
             onMouseOver={() =>
-              setCoordInfo({ show: true, id: index, point: c })
+              setCoordInfo({
+                show: true,
+                point: Object.assign({ id: i }, c),
+              })
             }
             onMouseOut={() => setCoordInfo({ show: false })}
             style={{ top: c.y - 4, left: c.x - 3 }}

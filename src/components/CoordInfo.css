@@ -6,7 +6,7 @@
   padding: 3px;
   color: #61dafb;
   border: 1px solid #61dafb;
-  background-color: rgba(30, 30, 30, 0.85);
+  background-color: rgba(30, 30, 30, 0.959);
   box-shadow: 1px 1px 5px rgba(10, 10, 10, 0.642);
   user-select: none;
   -moz-user-select: none;
@@ -25,9 +25,12 @@
   -moz-user-select: none;
 }
 
-.prevent-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.coord-info > canvas {
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  cursor: none;
+  pointer-events: none;
 }
