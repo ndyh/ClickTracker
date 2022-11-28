@@ -26,7 +26,7 @@ function App() {
   }
 
   function handleClear() {
-    if (coords.length !== 0 && poppedCoords.length !== 0) {
+    if (coords.length !== 0 || poppedCoords.length !== 0) {
       setCoords([]);
       setPoppedCoords([]);
     }
