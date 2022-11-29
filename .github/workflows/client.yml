@@ -38,7 +38,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      # Copy files from ./client/dist to S3
+      # Copy files from artifact to S3
       - name: Upload static site to S3
-        working-directory: ./client/dist
         run: aws s3 sync . s3://clicktracker-static-site --delete

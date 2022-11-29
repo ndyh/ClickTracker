@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "clicktracker_distribution" {
   origin {
     domain_name              = aws_s3_bucket.b.bucket_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.clicktracker-ac.id
     origin_id                = local.s3_origin_id
   }
 
@@ -98,9 +98,9 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "default" {
-  name                              = "default"
-  description                       = "Default Policy"
+resource "aws_cloudfront_origin_access_control" "clicktracker-ac" {
+  name                              = "clicktracker-ac"
+  description                       = "Clicktracker policy"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
