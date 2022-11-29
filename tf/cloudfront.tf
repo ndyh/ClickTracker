@@ -1,8 +1,12 @@
 resource "aws_cloudfront_distribution" "clicktracker_distribution" {
   origin {
     domain_name              = aws_s3_bucket.b.bucket_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.clicktracker-ac.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.clicktracker_ac.id
     origin_id                = local.s3_origin_id
+
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.oai
+    }
   }
 
   enabled             = true
@@ -38,31 +42,9 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
   }
 
   ordered_cache_behavior {
-    path_pattern     = "/content/immutable/*"
+    path_pattern     = "/index.html"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.s3_origin_id
-
-    forwarded_values {
-      query_string = false
-      headers      = ["Origin"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl                = 0
-    default_ttl            = 86400
-    max_ttl                = 31536000
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
-  }
-
-  ordered_cache_behavior {
-    path_pattern     = "/content/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.s3_origin_id
 
     forwarded_values {
@@ -75,7 +57,7 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
 
     min_ttl                = 0
     default_ttl            = 3600
-    max_ttl                = 86400
+    max_ttl                = 7200
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }
@@ -98,7 +80,11 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
   }
 }
 
-resource "aws_cloudfront_origin_access_control" "clicktracker-ac" {
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "Clicktracker OAI"
+}
+
+resource "aws_cloudfront_origin_access_control" "clicktracker_ac" {
   name                              = "clicktracker-ac"
   description                       = "Clicktracker policy"
   origin_access_control_origin_type = "s3"

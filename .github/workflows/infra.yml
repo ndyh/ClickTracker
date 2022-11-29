@@ -54,6 +54,5 @@ jobs:
 
       # Apply plans to infra
       - name: Terraform apply
-        if: steps.plan.outcome == 'success'
         working-directory: ./tf
         run: terraform apply
