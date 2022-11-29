@@ -12,4 +12,6 @@ jobs:
     uses: ./.github/workflows/client.yml
     secrets: inherit
 # call-workflow3:
+#   needs: call-workflow1
 #   uses: ./.github/workflows/server.yml
+#   secrets: inherit

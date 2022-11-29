@@ -12,7 +12,8 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
 
   logging_config {
     include_cookies = false
-    bucket          = ""
+    bucket          = "clicktracker-cloudfront-logs.s3.amazonaws.com"
+    prefix          = "ct-cf-"
   }
 
   aliases = []
