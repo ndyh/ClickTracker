@@ -1,7 +1,6 @@
 name: Infra
 on:
   workflow_call:
-    secrets: inherit
 jobs:
   lint:
     name: Lint

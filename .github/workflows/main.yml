@@ -6,8 +6,10 @@ on:
 jobs:
   call-workflow1:
     uses: ./.github/workflows/infra.yml
+    secrets: inherit
   call-workflow2:
     needs: call-workflow1
     uses: ./.github/workflows/client.yml
+    secrets: inherit
 # call-workflow3:
 #   uses: ./.github/workflows/server.yml

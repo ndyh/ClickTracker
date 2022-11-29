@@ -1,7 +1,6 @@
 name: Client
 on:
   workflow_call:
-    secrets: inherit
 jobs:
   build:
     runs-on: ubuntu-latest
