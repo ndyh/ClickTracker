@@ -55,4 +55,4 @@ jobs:
       # Apply plans to infra
       - name: Terraform apply
         working-directory: ./tf
-        run: terraform apply
+        run: terraform apply -auto-approve
