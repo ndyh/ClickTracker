@@ -5,8 +5,9 @@ on:
   workflow_dispatch:
 jobs:
   call-workflow1:
-    uses: ./github/workflows/infra.yml
+    uses: ./.github/workflows/infra.yml
   call-workflow2:
-    uses: ./github/workflows/client.yml
+    needs: call-workflow1
+    uses: ./.github/workflows/client.yml
 # call-workflow3:
-#   uses: ./github/workflows/server.yml
+#   uses: ./.github/workflows/server.yml
