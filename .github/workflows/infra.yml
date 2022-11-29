@@ -1,6 +1,7 @@
 name: Infra
 on:
   workflow_call:
+    secrets: inherit
 jobs:
   lint:
     name: Lint
@@ -41,7 +42,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
-          # role-session-name: InfraWorkflow
 
       # Init working directory for Terraform
       - name: Terraform init
