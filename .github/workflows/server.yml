@@ -1,0 +1,18 @@
+# name: Server
+# on:
+#   workflow_call:
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Clone repo to container
+#       - name: Clone repo
+#         uses: actions/checkout@v2
+#
+# Do things to package lambda, serve as server artifact
+#
+# Upload client artifact to s3 bucket
+#
+# Get shared server artifact from build step
+#
+# Upload server artifact to lambda

@@ -1,0 +1,12 @@
+name: Deploy
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+jobs:
+  call-workflow1:
+    uses: ./github/workflows/infra.yml
+  call-workflow2:
+    uses: ./github/workflows/client.yml
+# call-workflow3:
+#   uses: ./github/workflows/server.yml
