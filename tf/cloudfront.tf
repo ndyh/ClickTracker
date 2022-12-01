@@ -1,51 +1,32 @@
-resource "aws_cloudfront_distribution" "clicktracker_distribution" {
-  origin {
-    domain_name              = aws_s3_bucket.b.bucket_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.clicktracker_ac.id
-    origin_id                = local.s3_origin_id
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
-    }
-  }
-
+resource "aws_cloudfront_distribution" "clicktracker" {
+  price_class         = "PriceClass_100"
   enabled             = true
-  is_ipv6_enabled     = true
-  comment             = "Clicktracker Cloudfront Distribution"
   default_root_object = "index.html"
+  aliases             = []
+  comment             = "Clicktracker Distribution"
+
+  origin {
+    domain_name              = aws_s3_bucket.clicktracker.bucket_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.clicktracker.id
+    origin_id                = aws_s3_bucket.clicktracker.bucket
+  }
 
   logging_config {
-    include_cookies = false
     bucket          = "clicktracker-cloudfront-logs.s3.amazonaws.com"
-    prefix          = "ct-cf-"
+    prefix          = ""
+    include_cookies = false
   }
-
-  aliases = []
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
+    allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = aws_s3_bucket.clicktracker.bucket
     viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
-  }
+    compress               = true
 
-  ordered_cache_behavior {
-    path_pattern     = "/index.html"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.s3_origin_id
+    min_ttl     = 0
+    default_ttl = 5 * 60
+    max_ttl     = 60 * 60
 
     forwarded_values {
       query_string = false
@@ -54,25 +35,12 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
         forward = "none"
       }
     }
-
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 7200
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
   }
-
-  price_class = "PriceClass_100"
 
   restrictions {
     geo_restriction {
-      restriction_type = "whitelist"
-      locations        = ["US", "CA", "GB"]
+      restriction_type = "none"
     }
-  }
-
-  tags = {
-    Environment = "prod"
   }
 
   viewer_certificate {
@@ -80,11 +48,7 @@ resource "aws_cloudfront_distribution" "clicktracker_distribution" {
   }
 }
 
-resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = "Clicktracker OAI"
-}
-
-resource "aws_cloudfront_origin_access_control" "clicktracker_ac" {
+resource "aws_cloudfront_origin_access_control" "clicktracker" {
   name                              = "clicktracker-ac"
   description                       = "Clicktracker policy"
   origin_access_control_origin_type = "s3"
